@@ -1,0 +1,41 @@
+using System;
+
+abstract class Payment
+{
+    public abstract void ProcessPayment(decimal amount);
+
+    public void PaymentSuccessMessage()
+    {
+        Console.WriteLine("Payment processed successfully.");
+    }
+}
+
+class CreditCardPayment : Payment
+{
+    public override void ProcessPayment(decimal amount)
+    {
+        Console.WriteLine($"Processing Credit Card Payment of ${amount}");
+        PaymentSuccessMessage();
+    }
+}
+
+class PayPalPayment : Payment
+{
+    public override void ProcessPayment(decimal amount)
+    {
+        Console.WriteLine($"Processing PayPal Payment of ${amount}");
+        PaymentSuccessMessage();
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Payment creditCardPayment = new CreditCardPayment();
+        creditCardPayment.ProcessPayment(150); 
+                                               
+        Payment payPalPayment = new PayPalPayment();
+        payPalPayment.ProcessPayment(200);     
+    }
+}

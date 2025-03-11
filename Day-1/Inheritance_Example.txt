@@ -1,0 +1,48 @@
+using System;
+
+class Vehicle
+{
+    public string Brand { get; set; }
+    public void Start()
+    {
+        Console.WriteLine($"{Brand} is starting...");
+    }
+    public void Stop()
+    {
+        Console.WriteLine($"{Brand} is stopping...");
+    }
+}
+
+class Car : Vehicle
+{
+    public int NumberOfDoors { get; set; }
+    public void OpenTrunk()
+    {
+        Console.WriteLine($"{Brand} trunk is open.");
+    }
+}
+
+class Bike : Vehicle
+{
+    public bool HasSideStand { get; set; }
+    public void KickStart()
+    {
+        Console.WriteLine($"{Brand} is kick-started.");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Car car = new Car { Brand = "Toyota", NumberOfDoors = 4 };
+        car.Start();
+        car.OpenTrunk();
+        car.Stop();
+
+        Bike bike = new Bike { Brand = "Yamaha", HasSideStand = true };
+        bike.Start();
+        bike.KickStart();
+        bike.Stop();
+    }
+}
