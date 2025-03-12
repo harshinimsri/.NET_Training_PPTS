@@ -1,0 +1,39 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Product
+{
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public string Category { get; set; }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        
+        List<Product> products = new List<Product>
+        {
+            new Product { Name = "Laptop", Price = 1200, Category = "Electronics" },
+            new Product { Name = "Phone", Price = 800, Category = "Electronics" },
+            new Product { Name = "Shoes", Price = 100, Category = "Fashion" },
+            new Product { Name = "TV", Price = 1500, Category = "Electronics" },
+            new Product { Name = "Jeans", Price = 50, Category = "Fashion" }
+        };
+
+        
+        var filteredProducts = products
+            .Where(p => p.Category == "Electronics")  
+            .OrderByDescending(p => p.Price)           
+            .Select(p => new { p.Name, p.Price });     
+
+        
+        Console.WriteLine("Filtered and Sorted Products:");
+        foreach (var product in filteredProducts)
+        {
+            Console.WriteLine($"{product.Name} - ${product.Price}");
+        }
+    }
+}

@@ -1,0 +1,16 @@
+using System;
+
+namespace StringExtensions
+{
+    
+    public static class StringHelper
+    {
+           public static int WordCount(this string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+                return 0;
+
+            return text.Split(new[] { ' ', '\t', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        }
+    }
+}

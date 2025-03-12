@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        
+        List<Product> products = new List<Product>
+        {
+            new Product { Name = "Laptop", Price = 1500 },
+            new Product { Name = "Headphones", Price = 200 },
+            new Product { Name = "Mouse", Price = 50 }
+        };
+
+        
+        Func<double, double> applyDiscount = price => price * 0.9; // 10% discount
+
+        Console.WriteLine("Discounted Prices:");
+        foreach (var product in products)
+        {
+            double discountedPrice = applyDiscount(product.Price);
+            Console.WriteLine($"{product.Name}: ${discountedPrice}");
+        }
+    }
+}
+
+class Product
+{
+    public string Name { get; set; }
+    public double Price { get; set; }
+}

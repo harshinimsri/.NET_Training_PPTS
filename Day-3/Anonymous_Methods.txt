@@ -1,0 +1,18 @@
+using System;
+
+class Program
+{
+    delegate void Notify(string message);
+
+    static void Main(string[] args)
+    {
+        
+        Notify notifyUser = delegate (string message)
+        {
+            Console.WriteLine("Notification: " + message);
+        };
+
+        
+        notifyUser("Your order has been shipped!");
+    }
+}
