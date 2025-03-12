@@ -1,0 +1,33 @@
+using System;
+
+static class Logger
+{
+    public static void LogInfo(string message)
+    {
+        Console.WriteLine($"[INFO] {message}");
+    }
+
+    public static void LogError(string message)
+    {
+        Console.WriteLine($"[ERROR] {message}");
+    }
+}
+
+class OrderService
+{
+    public void PlaceOrder(int orderId)
+    {
+        Logger.LogInfo($"Order {orderId} has been placed successfully.");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        OrderService orderService = new OrderService();
+        orderService.PlaceOrder(101);
+
+        Logger.LogError("Failed to connect to the database.");
+    }
+}
