@@ -1,0 +1,38 @@
+using System;
+
+namespace MethodShadowingExample
+{
+    public class Employee
+    {
+        public string Name { get; set; } = "John Doe";
+        public string Role { get; set; } = "Employee";
+
+        public void GetDetails()
+        {
+            Console.WriteLine($"Name: {Name}, Role: {Role}");
+        }
+    }
+
+    public class Manager : Employee
+    {
+        public new void GetDetails()
+        {
+            Console.WriteLine($"Name: {Name}, Role: Manager, Department: Sales");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Employee emp = new Employee();
+            emp.GetDetails();
+
+            Manager mgr = new Manager();
+            mgr.GetDetails();
+
+            Employee empAsManager = new Manager();
+            empAsManager.GetDetails();
+        }
+    }
+}

@@ -1,0 +1,115 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace LINQExample
+{
+    public class Product
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Category { get; set; }
+        public decimal Price { get; set; }
+    }
+
+    public class Order
+    {
+        public int OrderId { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var products = new List<Product>
+            {
+                new Product { Id = 1, Name = "Laptop", Category = "Electronics", Price = 1200 },
+                new Product { Id = 2, Name = "Phone", Category = "Electronics", Price = 800 },
+                new Product { Id = 3, Name = "Shirt", Category = "Clothing", Price = 50 },
+                new Product { Id = 4, Name = "Shoes", Category = "Clothing", Price = 100 },
+                new Product { Id = 5, Name = "Tablet", Category = "Electronics", Price = 600 }
+            };
+
+            var orders = new List<Order>
+            {
+                new Order { OrderId = 101, ProductId = 1, Quantity = 2 },
+                new Order { OrderId = 102, ProductId = 2, Quantity = 1 },
+                new Order { OrderId = 103, ProductId = 4, Quantity = 3 },
+                new Order { OrderId = 104, ProductId = 1, Quantity = 1 },
+                new Order { OrderId = 105, ProductId = 5, Quantity = 2 }
+            };
+
+            // 1. Filtering
+            var expensiveProducts = products.Where(p => p.Price > 500);
+            Console.WriteLine("Expensive Products:");
+            foreach (var product in expensiveProducts)
+                Console.WriteLine(product.Name);
+
+            // 2. Sorting
+            var sortedProducts = products.OrderBy(p => p.Category).ThenByDescending(p => p.Price);
+            Console.WriteLine("\nSorted Products:");
+            foreach (var product in sortedProducts)
+                Console.WriteLine($"{product.Category} - {product.Name} - ${product.Price}");
+
+            // 3. Projection
+            var productNames = products.Select(p => p.Name);
+            Console.WriteLine("\nProduct Names:");
+            Console.WriteLine(string.Join(", ", productNames));
+
+            // 4. Aggregation
+            Console.WriteLine($"\nTotal Price: {products.Sum(p => p.Price)}");
+            Console.WriteLine($"Average Price: {products.Average(p => p.Price)}");
+            Console.WriteLine($"Most Expensive Product Price: {products.Max(p => p.Price)}");
+
+            // 5. Quantifiers
+            Console.WriteLine($"\nAny product above $1000? {products.Any(p => p.Price > 1000)}");
+            Console.WriteLine($"All products under $2000? {products.All(p => p.Price < 2000)}");
+
+            // 6. Element Operators
+            Console.WriteLine($"\nFirst Product: {products.First().Name}");
+            Console.WriteLine($"Last Product: {products.Last().Name}");
+            Console.WriteLine($"Product at Index 2: {products.ElementAt(2).Name}");
+
+            // 7. Joining
+            var orderDetails = orders.Join(products,
+                order => order.ProductId,
+                product => product.Id,
+                (order, product) => new
+                {
+                    OrderId = order.OrderId,
+                    ProductName = product.Name,
+                    TotalPrice = product.Price * order.Quantity
+                });
+
+            Console.WriteLine("\nOrder Details:");
+            foreach (var detail in orderDetails)
+                Console.WriteLine($"Order ID: {detail.OrderId}, Product: {detail.ProductName}, Total Price: ${detail.TotalPrice}");
+
+            // 8. Grouping
+            var groupedByCategory = products.GroupBy(p => p.Category);
+            Console.WriteLine("\nProducts Grouped by Category:");
+            foreach (var group in groupedByCategory)
+            {
+                Console.WriteLine(group.Key + ":");
+                foreach (var product in group)
+                    Console.WriteLine($" - {product.Name}");
+            }
+
+            // 9. Set Operations
+            var electronicIds = new List<int> { 1, 2, 5 };
+            var productIds = products.Select(p => p.Id);
+            var commonProducts = productIds.Intersect(electronicIds);
+
+            Console.WriteLine("\nCommon Products with Electronic IDs:");
+            Console.WriteLine(string.Join(", ", commonProducts));
+
+            // 10. Conversion
+            var productDictionary = products.ToDictionary(p => p.Id, p => p.Name);
+            Console.WriteLine("\nProduct Dictionary:");
+            foreach (var entry in productDictionary)
+                Console.WriteLine($"ID: {entry.Key}, Name: {entry.Value}");
+        }
+    }
+}

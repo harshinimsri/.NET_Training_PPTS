@@ -1,0 +1,51 @@
+using System;
+
+public class InsufficientFundsException : Exception
+{
+    public InsufficientFundsException(string message) : base(message) { }
+}
+
+public class BankAccount
+{
+    public string AccountNumber { get; set; }
+    public decimal Balance { get; private set; }
+
+    public BankAccount(string accountNumber, decimal initialBalance)
+    {
+        AccountNumber = accountNumber;
+        Balance = initialBalance;
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount > Balance)
+        {
+            throw new InsufficientFundsException($"Withdrawal of {amount:C} failed. Insufficient funds.");
+        }
+
+        Balance -= amount;
+        Console.WriteLine($"Withdrawal of {amount:C} successful. Remaining balance: {Balance:C}");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        BankAccount account = new BankAccount("123456", 500);
+
+        try
+        {
+            account.Withdraw(200);  // Successful withdrawal
+            account.Withdraw(400);  // Throws InsufficientFundsException
+        }
+        catch (InsufficientFundsException ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+        finally
+        {
+            Console.WriteLine($"Final Balance: {account.Balance:C}");
+        }
+    }
+}
