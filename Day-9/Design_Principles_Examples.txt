@@ -1,0 +1,161 @@
+1. SOLID Principles
+S - Single Responsibility Principle (SRP)
+
+Each class should have one responsibility.
+
+public class Invoice
+{
+    public void CalculateTotal() { /* Calculation logic */ }
+}
+
+public class InvoicePrinter
+{
+    public void PrintInvoice(Invoice invoice) { /* Printing logic */ }
+}
+
+O - Open/Closed Principle (OCP)
+
+Open for extension, closed for modification.
+
+// OCP Example - Good Design
+public abstract class Shape
+{
+    public abstract double CalculateArea();
+}
+
+public class Circle : Shape
+{
+    public double Radius { get; set; }
+    public override double CalculateArea() => Math.PI * Radius * Radius;
+}
+
+public class Rectangle : Shape
+{
+    public double Width { get; set; }
+    public double Height { get; set; }
+    public override double CalculateArea() => Width * Height;
+}
+L - Liskov Substitution Principle (LSP)
+
+Derived classes must be substitutable for their base classes.
+
+// LSP Example - Good Design
+public abstract class Bird
+{
+    public abstract void Fly();
+}
+
+public class Sparrow : Bird
+{
+    public override void Fly() { Console.WriteLine("Sparrow is flying"); }
+}
+
+public class Ostrich : Bird
+{
+    public override void Fly() { throw new InvalidOperationException("Ostriches can't fly"); }
+}
+I - Interface Segregation Principle (ISP)
+
+Clients should not be forced to depend on interfaces they don't use.
+
+// ISP Example - Good Design
+public interface IPrinter
+{
+    void PrintDocument();
+}
+
+public interface IScanner
+{
+    void ScanDocument();
+}
+
+public class AllInOnePrinter : IPrinter, IScanner
+{
+    public void PrintDocument() { Console.WriteLine("Printing document..."); }
+    public void ScanDocument() { Console.WriteLine("Scanning document..."); }
+}
+D - Dependency Inversion Principle (DIP)
+
+Depend on abstractions, not concrete implementations.
+
+// DIP Example - Good Design
+public interface ILogger
+{
+    void Log(string message);
+}
+
+public class ConsoleLogger : ILogger
+{
+    public void Log(string message) => Console.WriteLine(message);
+}
+
+public class PaymentProcessor
+{
+    private readonly ILogger _logger;
+    public PaymentProcessor(ILogger logger) { _logger = logger; }
+
+    public void ProcessPayment() => _logger.Log("Payment processed successfully.");
+}
+2. DRY Principle (Don't Repeat Yourself)
+Eliminate code duplication by creating reusable methods, classes, or components.
+
+Before DRY (Code Duplication)
+
+public class Calculator
+{
+    public int Add(int a, int b) => a + b;
+    public int Multiply(int a, int b) => a * b;
+    public int Subtract(int a, int b) => a - b;
+}
+After DRY (Reusable Logic)
+
+public class Calculator
+{
+    public int PerformOperation(int a, int b, Func<int, int, int> operation) => operation(a, b);
+}
+3. KISS Principle (Keep It Simple, Stupid)
+Avoid overcomplicating solutions. Write clear, concise code.
+
+Overly Complex Code (Violates KISS)
+
+public string GetGrade(int score)
+{
+    if (score >= 90) return "A";
+    else if (score >= 80) return "B";
+    else if (score >= 70) return "C";
+    else if (score >= 60) return "D";
+    else return "F";
+}
+Simplified Code (Follows KISS)
+
+public string GetGrade(int score) => score switch
+{
+    >= 90 => "A",
+    >= 80 => "B",
+    >= 70 => "C",
+    >= 60 => "D",
+    _ => "F"
+};
+4. YAGNI Principle (You Aren't Gonna Need It)
+Avoid writing unnecessary functionality until it's required.
+
+Before YAGNI (Unnecessary Complexity)
+
+public class Order
+{
+    public void CalculateDiscount()
+    {
+        // Adding logic for discounts that may never be used
+        Console.WriteLine("Applying premium discount logic...");
+    }
+}
+After YAGNI (Simpler Design)
+
+public class Order
+{
+    public void CalculateDiscount()
+    {
+        // Only implement the logic required for the current system
+        Console.WriteLine("Applying basic discount logic...");
+    }
+}
