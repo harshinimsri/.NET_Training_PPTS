@@ -1,0 +1,24 @@
+using System;
+
+[AttributeUsage(AttributeTargets.Method)]
+class CustomAttribute : Attribute
+{
+    public string Description { get; }
+    public CustomAttribute(string description) => Description = description;
+}
+
+class Program
+{
+    static void Main()
+    {
+        int result;
+        Calculate(10, 20, out result);
+        Console.WriteLine("Result: " + result);
+    }
+
+    [Custom("This method performs addition using the 'out' parameter.")]
+    static void Calculate(int a, int b, out int sum)
+    {
+        sum = a + b;
+    }
+}

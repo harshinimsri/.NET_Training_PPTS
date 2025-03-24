@@ -1,0 +1,30 @@
+using System;
+
+class InvalidAgeException : Exception
+{
+    public InvalidAgeException(string message) : base(message) { }
+}
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            ValidateAge(15);
+        }
+        catch (InvalidAgeException ex)
+        {
+            Console.WriteLine("Exception: " + ex.Message);
+        }
+    }
+
+    static void ValidateAge(int age)
+    {
+        if (age < 18)
+        {
+            throw new InvalidAgeException("Age must be 18 or older.");
+        }
+        Console.WriteLine("Age is valid.");
+    }
+}

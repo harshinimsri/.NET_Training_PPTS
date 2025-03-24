@@ -1,0 +1,26 @@
+using System;
+
+[AttributeUsage(AttributeTargets.Method)]
+class CustomAttribute : Attribute
+{
+    public string Description { get; }
+    public CustomAttribute(string description) => Description = description;
+}
+
+class Program
+{
+    static void Main()
+    {
+        PrintValues(1, 2, 3, 4, 5);
+        PrintValues("A", "B", "C");
+    }
+
+    [Custom("This method demonstrates the use of 'params' parameter.")]
+    static void PrintValues(params object[] values)
+    {
+        foreach (var value in values)
+        {
+            Console.WriteLine(value);
+        }
+    }
+}

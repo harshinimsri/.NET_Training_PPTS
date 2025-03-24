@@ -1,0 +1,21 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double doubleValue = 10.75;
+        int intValueCast = (int)doubleValue; 
+        Console.WriteLine("Casting Result: " + intValueCast);
+
+      
+        string stringValue = "123";
+        int intValueConvert = Convert.ToInt32(stringValue); 
+        Console.WriteLine("Convert Result: " + intValueConvert);
+
+        object obj = "456";
+        
+        int validConvert = Convert.ToInt32(obj);
+        Console.WriteLine("Valid Convert Result: " + validConvert);
+    }
+}

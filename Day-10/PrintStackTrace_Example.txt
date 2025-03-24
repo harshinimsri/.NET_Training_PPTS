@@ -1,0 +1,27 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            Method1();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Exception: " + ex.Message);
+            Console.WriteLine("Stack Trace:\n" + ex.StackTrace);
+        }
+    }
+
+    static void Method1()
+    {
+        Method2();
+    }
+
+    static void Method2()
+    {
+        throw new InvalidOperationException("An error occurred.");
+    }
+}

@@ -1,0 +1,49 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        string validNumber = "123";
+        string invalidNumber = "ABC";
+        
+        try
+        {
+            int result1 = int.Parse(validNumber);
+            Console.WriteLine("Parsed value using Parse(): " + result1);
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid format in Parse()");
+        }
+
+        try
+        {
+            int result2 = int.Parse(invalidNumber); 
+            Console.WriteLine("Parsed value using Parse(): " + result2);
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Parse() failed: Invalid format");
+        }
+
+        
+        if (int.TryParse(validNumber, out int result3))
+        {
+            Console.WriteLine("Parsed value using TryParse(): " + result3);
+        }
+        else
+        {
+            Console.WriteLine("TryParse() failed for valid input");
+        }
+
+        if (int.TryParse(invalidNumber, out int result4))
+        {
+            Console.WriteLine("Parsed value using TryParse(): " + result4);
+        }
+        else
+        {
+            Console.WriteLine("TryParse() failed for invalid input");
+        }
+    }
+}

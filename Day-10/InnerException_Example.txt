@@ -1,0 +1,32 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        try
+        {
+            try
+            {
+                int result = Divide(10, 0);
+            }
+            catch (DivideByZeroException ex)
+            {
+                throw new ApplicationException("An error occurred while dividing.", ex);
+            }
+        }
+        catch (ApplicationException ex)
+        {
+            Console.WriteLine($"Exception: {ex.Message}");
+            if (ex.InnerException != null)
+            {
+                Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+            }
+        }
+    }
+
+    static int Divide(int a, int b)
+    {
+        return a / b;
+    }
+}
